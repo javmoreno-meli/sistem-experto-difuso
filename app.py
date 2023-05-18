@@ -1,6 +1,6 @@
 #importar flask (para hacer la API)
 from flask import Flask, jsonify, request
-from internal.models.fuzzyModel import realizar_diagnostico as diagnostico
+from internal.controllers.controller import realizar_diagnostico as diagnostico
 
 
 #Definir la API
@@ -20,18 +20,13 @@ def realizar_diagnostico():
     if not ('temperatura' in datos and 'dolor_de_cabeza' in datos and 'tos' in datos):
         return jsonify({'mensaje': 'Faltan datos'})
     
+
     #realizar el diagnostico
-    entrada = {
-        'temperatura': datos['temperatura'],
-        'dolor_de_cabeza': datos['dolor_de_cabeza'],
-        'tos': datos['tos']
-    }
-    enfermedad_diagnosticada, tratamiento, resultado = diagnostico(entrada)
-    return jsonify({
-        'enfermedad_diagnosticada': enfermedad_diagnosticada,
-        'tratamiento': tratamiento,
-        'aproximacion': resultado
-    })
+    resultado = diagnostico(datos)
+    #imprimir el resultado
+    print(resultado)
+    #regresar el resultado al cliente
+    return jsonify(resultado)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
