@@ -1,9 +1,9 @@
 
 ## Integrantes
 - [x] **Freddy ----**
-- [x] **Adrian Rocha**
+- [x] **Adrian ----**
 - [x] **Agustin ----**
-- [x] **Javier Moreno**
+- [x] **Javier ----**
 
 
 
