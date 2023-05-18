@@ -43,8 +43,6 @@ regla1 = ctrl.Rule(temperatura['baja'] & dolor_de_cabeza['leve'] & tos['leve'], 
 regla2 = ctrl.Rule(temperatura['media'] & dolor_de_cabeza['moderado'] & tos['moderado'], enfermedad['bronquitis'])
 regla3 = ctrl.Rule(temperatura['alta'] & dolor_de_cabeza['severo'] & tos['severo'], enfermedad['neumonia'])
 
-
-
 #Definir el sistema de control
 diagnostico_ctrl = ctrl.ControlSystem([regla1, regla2, regla3])
 
@@ -53,7 +51,7 @@ diagnostico = ctrl.ControlSystemSimulation(diagnostico_ctrl)
 
 #Definir la ruta de la API
 @app.route('/diagnostico', methods=['POST'])
-def diagnostico():
+def realizar_diagnostico():
     #obtener los datos del request
     datos = request.get_json()
     #imprimir los datos
@@ -66,10 +64,25 @@ def diagnostico():
     diagnostico.compute()
     #obtener el resultado
     resultado = diagnostico.output['enfermedad']
-    #imprimir el resultado
+    #imprimir el resultado  
     print(resultado)
-    #retornar el resultado
-    return jsonify({'resultado': resultado})
+    pert_gripa = fuzz.interp_membership(enfermedad.universe, enfermedad['gripa'].mf, resultado)
+    pert_bronquitis = fuzz.interp_membership(enfermedad.universe, enfermedad['bronquitis'].mf, resultado)
+    pert_neumonia = fuzz.interp_membership(enfermedad.universe, enfermedad['neumonia'].mf, resultado)
+    #seleccionar la enfermedad con mayor pertenencia
+    if pert_gripa >= pert_bronquitis and pert_gripa >= pert_neumonia:
+        enfermedad_diagnosticada = 'Gripa'
+        tratamiento = 'Descanso, hidratación y medicamentos para aliviar los síntomas'
+    elif pert_bronquitis >= pert_gripa and pert_bronquitis >= pert_neumonia:
+        enfermedad_diagnosticada = 'Bronquitis'
+        tratamiento = 'Descanso, hidratación y medicamentos para aliviar los síntomas, puede requerir antibióticos'
+    else:
+        enfermedad_diagnosticada = 'Neumonía'
+        tratamiento = 'Hospitalización, antibióticos y cuidados intensivos'
+    #retornar el resultado y el tratamiento
+    return jsonify({'enfermedad_diagnosticada': enfermedad_diagnosticada, 'tratamiento': tratamiento, 'aproximacion': resultado})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+
