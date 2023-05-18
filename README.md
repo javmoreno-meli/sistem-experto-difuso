@@ -1,12 +1,3 @@
-
-## Integrantes
-- [x] **Freddy ----**
-- [x] **Adrian ----**
-- [x] **Agustin ----**
-- [x] **Javier ----**
-
-
-
 # Sistema experto difuso para la detección de enfermedades 
 
 **Resíratorias** 
@@ -31,7 +22,7 @@
 
 ## Descripción del proyecto
 
-Consiste en crear un sistema experto difuso basado en conocimiento para la detección de enfermedades, el cual se basa en un conjunto de reglas que se le proporcionan al sistema para que este pueda inferir y llegar a una conclusión. Inialmente se le pedira al usuario que ingrese nombre, sexo y edad para poder realizar la inferencia de la enfermedad, posteriormente se le dara una tabla para que seleccione los sintomas que presenta, y finalmente se le mostrara el resultado de la posible enfermedad que tiene y el tratamiento que debe seguir.
+Consiste en crear un sistema experto difuso basado en conocimiento para la detección de enfermedades, el cual se basa en un conjunto de reglas que se le proporcionan al sistema para que este pueda inferir y llegar a una conclusión. Inicalmente se recibe un json con la gravedad de los sintomas presentando y en base a eso se llega a una conclusion 
 
 ## Requisitos
 
@@ -45,26 +36,20 @@ Ejemplo JSON de entrada
 
 ```json
 {
-    "nombre": "Richard",
-    "sexo": "Masculino",
-    "edad": 21,
-    "sintomas": [
-        "Tos",
-        "Fiebre",
-        "Dolor de cabeza"
-    ]
-}
+     "temperatura": 36,
+     "dolor_de_cabeza": 6,
+     "tos": 6
+
+ }
 ```
 
 Ejemplo JSON de salida
 
 ```json
 {
-    "nombre": "Richard",
-    "sexo": "Masculino",
-    "edad": 21,
-    "enfermedad": "Gripe",
-    "tratamiento": "Tomar paracetamol"
+    "aproximacion": 50.0,
+    "enfermedad_diagnosticada": "Bronquitis",
+    "tratamiento": "Descanso, hidratación y medicamentos para aliviar los síntomas, puede requerir antibióticos"
 }
 ```
 
