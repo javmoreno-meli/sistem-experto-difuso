@@ -1,12 +1,3 @@
-
-## Integrantes
-- [x] **Freddy ----**
-- [x] **Adrian ----**
-- [x] **Agustin ----**
-- [x] **Javier ----**
-
-
-
 # Sistema experto difuso para la detección de enfermedades 
 
 **Resíratorias** 
